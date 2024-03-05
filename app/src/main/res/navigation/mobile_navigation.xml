@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_inicio">
+
+    <fragment
+        android:id="@+id/navigation_alumnos"
+        android:name="com.acevedo.caminoalcielo.ui.Alumnos.AlumnosFragment"
+        android:label="@string/title_alumnos"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_inicio"
+        android:name="com.acevedo.caminoalcielo.ui.Inicio.InicioFragment"
+        android:label="@string/title_inicio"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_cuenta"
+        android:name="com.acevedo.caminoalcielo.ui.Cuenta.CuentaFragment"
+        android:label="@string/title_cuenta"
+        tools:layout="@layout/fragment_notifications" />
+</navigation>

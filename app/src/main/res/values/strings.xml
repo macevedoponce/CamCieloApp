@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Camino Al Cielo</string>
+    <string name="title_inicio">Inicio</string>
+    <string name="title_cuenta">Cuenta</string>
+    <string name="title_alumnos">Alumnos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="derReservados">Todos los derechos reservados</string>
+    <string name="Login">Iniciar Sesión</string>
+    <string name="helperUser">Ej. 78451254</string>
+    <string name="etUser">Ingrese Dni\n</string>
+    <string name="etPassword">Ingrese contraseña\n</string>
+    <string name="btnLogin">Iniciar</string>
+    <string name="txtSinCuenta">No tiene una cuenta?</string>
+    <string name="txtCrearCuenta">Crear Cuenta</string>
+</resources>
