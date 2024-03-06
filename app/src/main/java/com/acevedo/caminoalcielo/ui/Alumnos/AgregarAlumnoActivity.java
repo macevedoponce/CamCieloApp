@@ -1,4 +1,4 @@
-package com.acevedo.caminoalcielo.CreateAccount;
+package com.acevedo.caminoalcielo.ui.Alumnos;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,8 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.acevedo.caminoalcielo.Adapters.AvatarAdapter;
 import com.acevedo.caminoalcielo.Clases.ProgressDialogHelper;
+import com.acevedo.caminoalcielo.CreateAccount.CrearCuentaActivity;
 import com.acevedo.caminoalcielo.Login.LoginActivity;
 import com.acevedo.caminoalcielo.R;
 import com.acevedo.caminoalcielo.Util.Util;
@@ -27,7 +32,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
@@ -39,62 +43,58 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CrearCuentaActivity extends AppCompatActivity {
+public class AgregarAlumnoActivity extends AppCompatActivity {
 
-    TextInputLayout tilNombres, tilApellidos, tilDni, tilPassword;
-    TextInputEditText edtNombres, edtApellidos, edtDni, edtPassword;
-    Button btnCrearCuenta;
-    TextView tvLogin,tvMensaje;
-
+    TextInputLayout tilNombres, tilApellidos, tilDni;
+    TextInputEditText edtNombres, edtApellidos, edtDni;
+    Button btnAgregarAlumno;
+    RecyclerView rvAvatars;
+    TextView tvMensaje;
+    RequestQueue requestQueue;
     ImageView ivAtras, ivLogo;
 
-    RequestQueue requestQueue;
-
+    LinearLayout llRegresar;
     private ProgressDialogHelper progressDialogHelper;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_crear_cuenta);
+        Util.obtenerListaAvatars();
         progressDialogHelper = new ProgressDialogHelper(this);
+        setContentView(R.layout.activity_agregar_alumno);
+        ivAtras = findViewById(R.id.ivAtrasCrearAlumno);
+        ivLogo = findViewById(R.id.ivLogoCrearAlumno);
+        llRegresar = findViewById(R.id.llRegresar);
+        tvMensaje = findViewById(R.id.tvMensaje);
         tilNombres = findViewById(R.id.tilNombres);
         tilApellidos = findViewById(R.id.tilApellidos);
         tilDni = findViewById(R.id.tilDni);
-        tilPassword = findViewById(R.id.tilPassword);
         edtNombres = findViewById(R.id.edtNombres);
         edtApellidos = findViewById(R.id.edtApellidos);
         edtDni = findViewById(R.id.edtDni);
-        edtPassword = findViewById(R.id.edtPassword);
-        btnCrearCuenta = findViewById(R.id.btnCrearCuenta);
-        tvLogin = findViewById(R.id.tvLogin);
-        ivAtras = findViewById(R.id.ivAtras);
-        ivLogo = findViewById(R.id.ivLogo);
-        tvMensaje = findViewById(R.id.tvMensaje);
-
+        btnAgregarAlumno = findViewById(R.id.btnAgregarAlumno);
+        rvAvatars = findViewById(R.id.rvAvatars);
         requestQueue = Volley.newRequestQueue(this);
+        rvAvatars.setHasFixedSize(true);
+        rvAvatars.setLayoutManager(new GridLayoutManager(this, 3));
 
+        AvatarAdapter avatarAdapter = new AvatarAdapter(Util.listAvatars);
+        rvAvatars.setAdapter(avatarAdapter);
         ThemeActive();
-
-        tvLogin.setOnClickListener(new View.OnClickListener() {
+        llRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getOnBackPressedDispatcher().onBackPressed();
             }
         });
 
-        ivAtras.setOnClickListener(new View.OnClickListener() {
+        btnAgregarAlumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
-
-        btnCrearCuenta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ValidarCampos();
+                ValidarDatos();
             }
         });
 
@@ -103,6 +103,83 @@ public class CrearCuentaActivity extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+    }
+
+    private void ValidarDatos() {
+        String nombres = edtNombres.getText().toString();
+        String apellidos = edtApellidos.getText().toString();
+        String dni = edtDni.getText().toString();
+
+        if(!nombres.isEmpty() && !apellidos.isEmpty() && !dni.isEmpty()){
+            CrearAlumno(nombres, apellidos, dni);
+        }else{
+            if(nombres.isEmpty()){
+                tilNombres.setError("Nombres no pueden ser vacios");
+            }
+            if(apellidos.isEmpty()){
+                tilApellidos.setError("Apellidos no pueden ser vacios");
+            }
+            if(dni.isEmpty()){
+                tilDni.setError("DNI no pueden ser vacios");
+            }
+        }
+
+    }
+
+    private void CrearAlumno(String nombres, String apellidos, String dni) {
+        progressDialogHelper.showProgressDialog();
+        String nombreAvatar = Util.nombreAvatar;
+        String url = Util.RUTA_CREAR_ALUMNOS;
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+
+                            if(status.equals("success")){
+                                progressDialogHelper.hideProgressDialog();
+                                Toast.makeText(AgregarAlumnoActivity.this, message, Toast.LENGTH_SHORT).show();
+                                getOnBackPressedDispatcher().onBackPressed();
+
+                            }else{
+                                tvMensaje.setVisibility(View.VISIBLE);
+                                tvMensaje.setText(message);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(AgregarAlumnoActivity.this, e + "", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Manejar errores de la solicitud
+                        progressDialogHelper.hideProgressDialog();
+                        Toast.makeText(AgregarAlumnoActivity.this, "Error al registrar alumno", Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("nombres", nombres);
+                params.put("apellidos", apellidos);
+                params.put("dni", dni);
+                params.put("foto", nombreAvatar);
+                params.put("id_rol", "2");
+                return params;
+            }
+        };
+
+        // Agregar la solicitud a la cola de Volley para su ejecución
+        requestQueue.add(request);
     }
 
     private void ThemeActive() {
@@ -120,88 +197,4 @@ public class CrearCuentaActivity extends AppCompatActivity {
         }
     }
 
-    private void ValidarCampos() {
-    //obtener datos escritos
-        String nombres = edtNombres.getText().toString();
-        String apellidos = edtApellidos.getText().toString();
-        String dni = edtDni.getText().toString();
-        String password = edtPassword.getText().toString();
-
-        //validar que no hay datos vacios
-        if(!nombres.isEmpty() && !apellidos.isEmpty() && !dni.isEmpty() && !password.isEmpty()){
-            CrearCuenta(nombres, apellidos, dni, password);
-        }else{
-
-            if(nombres.isEmpty()){
-                tilNombres.setError("Nombres no pueden ser vacios");
-            }
-            if(apellidos.isEmpty()){
-                tilApellidos.setError("Apellidos no pueden ser vacios");
-            }
-            if(dni.isEmpty()){
-                tilDni.setError("DNI no pueden ser vacios");
-            }
-            if(password.isEmpty()){
-                tilPassword.setError("Contraseña no pueden ser vacios");
-            }
-        }
-    }
-
-    private void CrearCuenta(String nombres, String apellidos, String dni, String password) {
-        progressDialogHelper.showProgressDialog();
-        String url = Util.RUTA_CREAR_USUARIO;
-
-        // Crear una solicitud JsonObjectRequest para enviar los datos al servidor
-        StringRequest request = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Procesar la respuesta del servidor
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            String status = jsonResponse.getString("status");
-                            String message = jsonResponse.getString("message");
-
-                            if(status.equals("success")){
-                                progressDialogHelper.hideProgressDialog();
-                                Toast.makeText(CrearCuentaActivity.this, message, Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(CrearCuentaActivity.this, LoginActivity.class);
-                                startActivity(i);
-                                finish();
-
-                            }else{
-                                tvMensaje.setVisibility(View.VISIBLE);
-                                tvMensaje.setText(message);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(CrearCuentaActivity.this, e + "", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Manejar errores de la solicitud
-                        progressDialogHelper.hideProgressDialog();
-                        Toast.makeText(CrearCuentaActivity.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
-                    }
-                }){
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("nombres", nombres);
-                params.put("apellidos", apellidos);
-                params.put("dni", dni);
-                params.put("password", password);
-                params.put("id_rol", "1");
-                return params;
-            }
-        };
-
-        // Agregar la solicitud a la cola de Volley para su ejecución
-        requestQueue.add(request);
-    }
 }

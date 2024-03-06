@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.activity)
     implementation(libs.lottie)
+    implementation (libs.swiperefreshlayout)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

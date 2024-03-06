@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
 
+    <color name="transparente">#0003060B</color>
+    <color name="selected">#802196F3</color>
     <color name="principal">#03060B</color>
     <color name="secundario">#112C3F</color>
     <color name="principal_dark">#081621</color>

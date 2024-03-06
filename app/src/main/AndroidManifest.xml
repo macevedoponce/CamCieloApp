@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.Alumnos.AgregarAlumnoActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateAccount.CrearCuentaActivity"
             android:exported="false" />
         <activity

@@ -18,4 +18,8 @@
     <string name="txtSinCuenta">No tiene una cuenta?</string>
     <string name="txtConCuenta">Ya tiene una cuenta?</string>
     <string name="Bienvenido">Bienvenido</string>
+    <string name="CrearAlumno">Crear Alumno</string>
+    <string name="volver">volver</string>
+    <string name="AgregarAlumno">Agregar Alumno</string>
+    <string name="SelectAvatar">Seleccione Avatar</string>
 </resources>

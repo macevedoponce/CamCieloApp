@@ -6,11 +6,23 @@
     android:orientation="vertical"
     tools:context=".ui.Alumnos.AlumnosFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAlumnos"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srlActualizarAlumnos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"/>
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAlumnos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"/>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAgregarTarea"
@@ -18,7 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_alumno"
-        android:contentDescription="Agregar" />
+        android:src="@drawable/ic_add_alumno" />
 
 </FrameLayout>
