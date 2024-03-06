@@ -17,4 +17,5 @@
     <string name="btnCreateAccount">Crear</string>
     <string name="txtSinCuenta">No tiene una cuenta?</string>
     <string name="txtConCuenta">Ya tiene una cuenta?</string>
+    <string name="Bienvenido">Bienvenido</string>
 </resources>

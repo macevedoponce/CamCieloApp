@@ -1,7 +1,11 @@
 package com.acevedo.caminoalcielo;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.acevedo.caminoalcielo.Login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_alumnos, R.id.navigation_inicio, R.id.navigation_cuenta)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
+
+
+
 
 }
