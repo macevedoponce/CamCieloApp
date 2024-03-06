@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.lottie)
     implementation (libs.swiperefreshlayout)
+    implementation (libs.shimmer)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

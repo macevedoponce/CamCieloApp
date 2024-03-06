@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acevedo.caminoalcielo.Adapters.AlumnoAdapter;
@@ -43,15 +45,13 @@ import java.util.List;
 public class AlumnosFragment extends Fragment {
 
     SwipeRefreshLayout srlActualizarAlumnos;
-
+    LinearLayout viewLoading;
     RecyclerView rvAlumnos;
     RequestQueue requestQueue;
     List<Alumnos> alumnosList;
     AlumnoAdapter alumnoAdapter;
-
+    TextView tvSinAlumnos;
     FloatingActionButton fabAgregarTarea;
-
-    private ProgressDialogHelper progressDialogHelper;
 
     public AlumnosFragment() {
         // Required empty public constructor
@@ -68,7 +68,8 @@ public class AlumnosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_alumnos, container, false);
-        progressDialogHelper = new ProgressDialogHelper(getContext());
+        tvSinAlumnos = view.findViewById(R.id.tvSinAlumnos);
+        viewLoading = view.findViewById(R.id.viewLoading);
         srlActualizarAlumnos = view.findViewById(R.id.srlActualizarAlumnos);
         fabAgregarTarea = view.findViewById(R.id.fabAgregarTarea);
         rvAlumnos = view.findViewById(R.id.rvAlumnos);
@@ -99,16 +100,15 @@ public class AlumnosFragment extends Fragment {
     }
 
     private void cargarAlumnos() {
-        progressDialogHelper.showProgressDialog();
         String url = Util.RUTA_LIST_ALUMNOS + "?id_rol=2";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        progressDialogHelper.hideProgressDialog();
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
+                                viewLoading.setVisibility(View.GONE);
                                 JSONArray jsonArray = response.getJSONArray("data");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -121,6 +121,9 @@ public class AlumnosFragment extends Fragment {
                                     alumnosList.add(alumnos);
                                 }
                                 alumnoAdapter.notifyDataSetChanged();
+                            }else{
+                                viewLoading.setVisibility(View.GONE);
+                                tvSinAlumnos.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -130,7 +133,6 @@ public class AlumnosFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressDialogHelper.hideProgressDialog();
                         error.printStackTrace();
                     }
                 });

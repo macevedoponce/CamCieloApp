@@ -57,9 +57,10 @@
                 android:id="@+id/animationView"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                app:lottie_rawRes="@raw/load_splash_animation"
+                app:lottie_rawRes="@raw/animation_loading_2"
                 app:lottie_autoPlay="true"
-                app:lottie_loop="true"/>
+                app:lottie_cacheComposition="true"
+                app:lottie_ignoreDisabledSystemAnimations="true"/>
 
             <TextView
                 android:id="@+id/txtDerechos"

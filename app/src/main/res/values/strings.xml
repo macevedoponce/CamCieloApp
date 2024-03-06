@@ -22,4 +22,5 @@
     <string name="volver">volver</string>
     <string name="AgregarAlumno">Agregar Alumno</string>
     <string name="SelectAvatar">Seleccione Avatar</string>
+    <string name="sinAlumnos">Actualmente no tienes ningun alumno registrado</string>
 </resources>
