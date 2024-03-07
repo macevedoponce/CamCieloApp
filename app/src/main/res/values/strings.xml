@@ -29,4 +29,8 @@
     <string name="participacion">Participación</string>
     <string name="asistencia">Asistencia</string>
     <string name="biblia">Biblia\n</string>
+    <string name="descargarPdf">Descargar PDF</string>
+    <string name="subTotal">SubTotal</string>
+    <string name="Total">Total</string>
+    <string name="sinRegistros">Actualmente no cuentas con ningun registro</string>
 </resources>
