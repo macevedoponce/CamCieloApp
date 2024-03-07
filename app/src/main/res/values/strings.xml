@@ -23,4 +23,10 @@
     <string name="AgregarAlumno">Agregar Alumno</string>
     <string name="SelectAvatar">Seleccione Avatar</string>
     <string name="sinAlumnos">Actualmente no tienes ningun alumno registrado</string>
+    <string name="tituloDialogo">Que deseas hacer?</string>
+    <string name="registrarPuntos">Registrar Puntos</string>
+    <string name="exportarPdf">Exportar Datos PDF</string>
+    <string name="participacion">Participación</string>
+    <string name="asistencia">Asistencia</string>
+    <string name="biblia">Biblia\n</string>
 </resources>

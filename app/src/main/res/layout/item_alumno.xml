@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAlumno"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:cardElevation="6dp"
@@ -65,7 +66,7 @@
 
 
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
     

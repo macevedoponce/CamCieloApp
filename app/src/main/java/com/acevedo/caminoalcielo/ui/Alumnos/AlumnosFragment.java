@@ -39,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -51,6 +52,8 @@ public class AlumnosFragment extends Fragment {
     List<Alumnos> alumnosList;
     AlumnoAdapter alumnoAdapter;
     TextView tvSinAlumnos;
+
+    String fechaActual;
     FloatingActionButton fabAgregarTarea;
 
     public AlumnosFragment() {
@@ -79,6 +82,7 @@ public class AlumnosFragment extends Fragment {
         alumnosList = new ArrayList<>();
         alumnoAdapter = new AlumnoAdapter(getContext(), alumnosList);
         rvAlumnos.setAdapter(alumnoAdapter);
+        obtenerFechaActual();
         cargarAlumnos();
 
         srlActualizarAlumnos.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -100,7 +104,7 @@ public class AlumnosFragment extends Fragment {
     }
 
     private void cargarAlumnos() {
-        String url = Util.RUTA_LIST_ALUMNOS + "?id_rol=2";
+        String url = Util.RUTA_LIST_ALUMNOS + "?id_rol=2&fecha=" + fechaActual;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -112,14 +116,23 @@ public class AlumnosFragment extends Fragment {
                                 JSONArray jsonArray = response.getJSONArray("data");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    int id = jsonObject.getInt("id");
-                                    String nombres = jsonObject.getString("nombres");
-                                    String apellidos = jsonObject.getString("apellidos");
-                                    String dni = jsonObject.getString("dni");
-                                    String foto = jsonObject.getString("foto");
-                                    Alumnos alumnos = new Alumnos(id, nombres, apellidos, dni, foto);
+                                    int id = jsonObject.getInt("user_id");
+                                    String nombres = jsonObject.getString("user_nombres");
+                                    String apellidos = jsonObject.getString("user_apellidos");
+                                    String dni = jsonObject.getString("user_dni");
+                                    String foto = jsonObject.getString("user_foto");
+                                    String puntPart = jsonObject.getString("puntos_participacion");
+                                    String puntAsis = jsonObject.getString("puntos_asistencia");
+                                    String puntBib = jsonObject.getString("puntos_biblia");
+                                    Alumnos alumnos = new Alumnos(id, nombres, apellidos, dni, foto, puntPart, puntAsis, puntBib);
                                     alumnosList.add(alumnos);
                                 }
+                                alumnoAdapter.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        DialogoMenu(v);
+                                    }
+                                });
                                 alumnoAdapter.notifyDataSetChanged();
                             }else{
                                 viewLoading.setVisibility(View.GONE);
@@ -138,5 +151,78 @@ public class AlumnosFragment extends Fragment {
                 });
 
         requestQueue.add(request);
+    }
+
+    private void DialogoMenu(View view) {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView( R.layout.dialog_menu_alumno);
+
+
+        //datos del item seleccionado
+        int id = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getUser_id();
+        String nombres = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getUser_nombres();
+        String apellidos = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getUser_apellidos();
+        String dni = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getUser_dni();
+        String foto = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getUser_foto();
+        String puntPart = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getPuntos_participacion();
+        String puntAsis = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getPuntos_asistencia();
+        String puntBib = alumnosList.get(rvAlumnos.getChildAdapterPosition(view)).getPuntos_biblia();
+
+        CardView cvRegistrarPuntos = dialog.findViewById(R.id.cvRegistrarPuntos);
+        CardView cvExportarPDF = dialog.findViewById(R.id.cvExportarPDF);
+
+        cvRegistrarPuntos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Intent i = new Intent(getContext(), RegistrarPuntosActivity.class);
+                i.putExtra("id_alumno",id);
+                i.putExtra("nombres",nombres);
+                i.putExtra("apellidos",apellidos);
+                i.putExtra("dni",dni);
+                i.putExtra("foto",foto);
+                i.putExtra("puntPart",puntPart);
+                i.putExtra("puntAsis",puntAsis);
+                i.putExtra("puntBib",puntBib);
+                i.putExtra("fecha",fechaActual);
+                startActivity(i);
+            }
+        });
+
+        cvExportarPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Intent i = new Intent(getContext(), ExportarDatosPDFActivity.class);
+                i.putExtra("id_alumno",id);
+                i.putExtra("nombres",nombres);
+                i.putExtra("apellidos",apellidos);
+                i.putExtra("dni",dni);
+                i.putExtra("foto",foto);
+                startActivity(i);
+            }
+        });
+
+
+
+
+        dialog.show();
+        dialog.setCancelable(true);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.CENTER);
+    }
+
+    private void obtenerFechaActual() {
+        // Obtener la fecha y hora actuales
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // El mes comienza desde 0
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        fechaActual = year + "-" + month + "-" + dayOfMonth;
+
     }
 }

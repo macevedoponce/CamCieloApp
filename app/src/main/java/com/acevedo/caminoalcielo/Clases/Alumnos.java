@@ -8,13 +8,44 @@ public class Alumnos {
     String user_apellidos;
     String user_dni;
     String user_foto;
+    String puntos_participacion;
+    String puntos_asistencia;
+    String puntos_biblia;
 
-    public Alumnos(int user_id, String user_nombres, String user_apellidos, String user_dni, String user_foto) {
+
+    public Alumnos(int user_id, String user_nombres, String user_apellidos, String user_dni, String user_foto, String puntos_participacion, String puntos_asistencia, String puntos_biblia) {
         this.user_id = user_id;
         this.user_nombres = user_nombres;
         this.user_apellidos = user_apellidos;
         this.user_dni = user_dni;
         this.user_foto = user_foto;
+        this.puntos_participacion = puntos_participacion;
+        this.puntos_asistencia = puntos_asistencia;
+        this.puntos_biblia = puntos_biblia;
+    }
+
+    public String getPuntos_participacion() {
+        return puntos_participacion;
+    }
+
+    public void setPuntos_participacion(String puntos_participacion) {
+        this.puntos_participacion = puntos_participacion;
+    }
+
+    public String getPuntos_asistencia() {
+        return puntos_asistencia;
+    }
+
+    public void setPuntos_asistencia(String puntos_asistencia) {
+        this.puntos_asistencia = puntos_asistencia;
+    }
+
+    public String getPuntos_biblia() {
+        return puntos_biblia;
+    }
+
+    public void setPuntos_biblia(String puntos_biblia) {
+        this.puntos_biblia = puntos_biblia;
     }
 
     public int getUser_id() {
@@ -57,7 +88,6 @@ public class Alumnos {
         this.user_foto = user_foto;
     }
 
-    @NonNull
     @Override
     public String toString() {
         return "Alumnos{" +
@@ -66,6 +96,9 @@ public class Alumnos {
                 ", user_apellidos='" + user_apellidos + '\'' +
                 ", user_dni='" + user_dni + '\'' +
                 ", user_foto='" + user_foto + '\'' +
+                ", puntos_participacion='" + puntos_participacion + '\'' +
+                ", puntos_asistencia='" + puntos_asistencia + '\'' +
+                ", puntos_biblia='" + puntos_biblia + '\'' +
                 '}';
     }
 }

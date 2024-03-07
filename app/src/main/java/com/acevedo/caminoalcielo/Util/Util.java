@@ -32,5 +32,6 @@ public class Util {
     public static final String RUTA_VALIDAR_USUARIO = RUTA + "validar_usuario.php";
     public static final String RUTA_LIST_ALUMNOS = RUTA + "list_alumnos.php";
     public static final String RUTA_CREAR_ALUMNOS = RUTA + "crear_alumno.php";
+    public static final String RUTA_REGISTRAR_PUNTOS = RUTA + "registrar_puntos.php";
 
 }

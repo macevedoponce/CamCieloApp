@@ -16,4 +16,5 @@
     <color name="principal_dark">#081621</color>
     <color name="secundario_dark">#2D78AC</color>
     <color name="error">#D32F2F</color>
+    <color name="success">#4CAF50</color>
 </resources>

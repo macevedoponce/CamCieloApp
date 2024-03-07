@@ -145,6 +145,7 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
                                 getOnBackPressedDispatcher().onBackPressed();
 
                             }else{
+                                progressDialogHelper.hideProgressDialog();
                                 tvMensaje.setVisibility(View.VISIBLE);
                                 tvMensaje.setText(message);
                             }
@@ -152,8 +153,6 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(AgregarAlumnoActivity.this, e + "", Toast.LENGTH_SHORT).show();
-
-
                         }
                     }
                 },
