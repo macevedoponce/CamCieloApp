@@ -1,4 +1,4 @@
-package com.acevedo.caminoalcielo.CreateAccount;
+package com.acevedo.caminoalcielo.ui;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -11,15 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.acevedo.caminoalcielo.Clases.ProgressDialogHelper;
-import com.acevedo.caminoalcielo.Login.LoginActivity;
 import com.acevedo.caminoalcielo.R;
 import com.acevedo.caminoalcielo.Util.Util;
 import com.android.volley.AuthFailureError;
@@ -27,7 +22,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;

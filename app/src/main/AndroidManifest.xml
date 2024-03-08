@@ -27,13 +27,13 @@
             android:name=".ui.Alumnos.AgregarAlumnoActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateAccount.CrearCuentaActivity"
+            android:name=".ui.CrearCuentaActivity"
             android:exported="false" />
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".ui.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".Splash.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

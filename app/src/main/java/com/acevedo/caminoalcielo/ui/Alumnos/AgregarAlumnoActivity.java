@@ -1,6 +1,5 @@
 package com.acevedo.caminoalcielo.ui.Alumnos;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -12,19 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acevedo.caminoalcielo.Adapters.AvatarAdapter;
 import com.acevedo.caminoalcielo.Clases.ProgressDialogHelper;
-import com.acevedo.caminoalcielo.CreateAccount.CrearCuentaActivity;
-import com.acevedo.caminoalcielo.Login.LoginActivity;
 import com.acevedo.caminoalcielo.R;
 import com.acevedo.caminoalcielo.Util.Util;
 import com.android.volley.AuthFailureError;

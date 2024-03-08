@@ -1,15 +1,12 @@
 package com.acevedo.caminoalcielo;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.acevedo.caminoalcielo.Login.LoginActivity;
+import com.acevedo.caminoalcielo.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +14,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import com.acevedo.caminoalcielo.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
