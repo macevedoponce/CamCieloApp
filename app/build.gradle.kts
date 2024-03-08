@@ -50,6 +50,9 @@ dependencies {
     implementation (libs.swiperefreshlayout)
     implementation (libs.shimmer)
 
+    implementation(libs.activity.ktx)
+    implementation(libs.fragment.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
