@@ -17,4 +17,10 @@
     <color name="secundario_dark">#2D78AC</color>
     <color name="error">#D32F2F</color>
     <color name="success">#4CAF50</color>
+
+
+    <color name="primer_p">#FFC107</color>
+    <color name="segundo_p">#AB8005</color>
+    <color name="tercer_p">#544003</color>
+    <color name="cuarto_p">#2C2101</color>
 </resources>

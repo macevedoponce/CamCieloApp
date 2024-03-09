@@ -12,6 +12,14 @@ public class Alumnos {
     String puntos_asistencia;
     String puntos_biblia;
 
+    String total_puntos;
+
+    public Alumnos(String user_nombres, String user_apellidos,  String user_foto, String total_puntos) {
+        this.user_nombres = user_nombres;
+        this.user_apellidos = user_apellidos;
+        this.user_foto = user_foto;
+        this.total_puntos = total_puntos;
+    }
 
     public Alumnos(int user_id, String user_nombres, String user_apellidos, String user_dni, String user_foto, String puntos_participacion, String puntos_asistencia, String puntos_biblia) {
         this.user_id = user_id;
@@ -88,17 +96,11 @@ public class Alumnos {
         this.user_foto = user_foto;
     }
 
-    @Override
-    public String toString() {
-        return "Alumnos{" +
-                "user_id=" + user_id +
-                ", user_nombres='" + user_nombres + '\'' +
-                ", user_apellidos='" + user_apellidos + '\'' +
-                ", user_dni='" + user_dni + '\'' +
-                ", user_foto='" + user_foto + '\'' +
-                ", puntos_participacion='" + puntos_participacion + '\'' +
-                ", puntos_asistencia='" + puntos_asistencia + '\'' +
-                ", puntos_biblia='" + puntos_biblia + '\'' +
-                '}';
+    public String getTotal_puntos() {
+        return total_puntos;
+    }
+
+    public void setTotal_puntos(String total_puntos) {
+        this.total_puntos = total_puntos;
     }
 }

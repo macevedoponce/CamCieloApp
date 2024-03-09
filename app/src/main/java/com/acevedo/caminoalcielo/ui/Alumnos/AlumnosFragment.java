@@ -136,6 +136,7 @@ public class AlumnosFragment extends Fragment {
                                 alumnoAdapter.notifyDataSetChanged();
                             }else{
                                 viewLoading.setVisibility(View.GONE);
+                                rvAlumnos.setVisibility(View.GONE);
                                 tvSinAlumnos.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
@@ -146,7 +147,8 @@ public class AlumnosFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+
+                        Toast.makeText(getContext(), "No podemos acceder a nuestro servidor", Toast.LENGTH_SHORT).show();
                     }
                 });
 
