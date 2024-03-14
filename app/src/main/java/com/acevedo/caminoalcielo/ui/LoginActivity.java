@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.acevedo.caminoalcielo.Clases.ProgressDialogHelper;
 import com.acevedo.caminoalcielo.MainActivity;
 import com.acevedo.caminoalcielo.R;
 import com.acevedo.caminoalcielo.Util.Util;
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
 
+    ProgressDialogHelper progressDialogHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         tvCrearCuenta = findViewById(R.id.tvCrearCuenta);
         tvMensaje = findViewById(R.id.tvMensaje);
+        progressDialogHelper = new ProgressDialogHelper(this);
         requestQueue = Volley.newRequestQueue(this);
         recuperarPreferencias();
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -97,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ValidarUsuario(String dni, String password) throws UnsupportedEncodingException {
+        progressDialogHelper.showProgressDialog();
         String encodedDni = URLEncoder.encode(dni, "UTF-8");
         String encodedPassword = URLEncoder.encode(password, "UTF-8");
         String url = Util.RUTA_VALIDAR_USUARIO +"?dni="+ encodedDni + "&password=" + encodedPassword;
@@ -110,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
+                                progressDialogHelper.hideProgressDialog();
                                 // Usuario validado correctamente
                                 JSONObject userData = response.getJSONObject("data");
                                 String id = userData.getString("id");
@@ -134,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                                 finish();
 
                             } else {
+                                progressDialogHelper.hideProgressDialog();
                                 // Error al validar el usuario
                                 String message = response.getString("message");
                                 tvMensaje.setVisibility(View.VISIBLE);
@@ -157,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void recuperarPreferencias() {
-        SharedPreferences preferences = getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("userLoginDocenteCaminoCieloApp", Context.MODE_PRIVATE);
         boolean session = preferences.getBoolean("session", false);
 
         if(session){
