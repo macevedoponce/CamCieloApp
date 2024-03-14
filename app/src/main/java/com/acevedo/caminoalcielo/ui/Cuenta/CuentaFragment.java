@@ -52,7 +52,7 @@ public class CuentaFragment extends Fragment {
         cvCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences preferences=getActivity().getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+                SharedPreferences preferences=getActivity().getSharedPreferences("userLoginDocenteCaminoCieloApp", Context.MODE_PRIVATE);
                 preferences.edit().clear().commit();
 
                 Intent i = new Intent(getContext(), LoginActivity.class);
@@ -67,7 +67,7 @@ public class CuentaFragment extends Fragment {
     }
 
     private void recuperarPreferencias() {
-        SharedPreferences preferences = getContext().getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getContext().getSharedPreferences("userLoginDocenteCaminoCieloApp", Context.MODE_PRIVATE);
 
         String id = preferences.getString("id","");
         String dni = preferences.getString("dni","");

@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String foto = userData.getString("foto");
 
                                 // Guardar los datos del usuario en SharedPreferences
-                                SharedPreferences sharedPreferences = getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+                                SharedPreferences sharedPreferences = getSharedPreferences("userLoginDocenteCaminoCieloApp", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("id", id);
                                 editor.putString("dni", dni);

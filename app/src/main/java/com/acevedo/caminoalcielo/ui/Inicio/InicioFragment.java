@@ -151,7 +151,7 @@ public class InicioFragment extends Fragment {
 
 
         private void RecuperarPreferencias() {
-        SharedPreferences preferences = requireContext().getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+        SharedPreferences preferences = requireContext().getSharedPreferences("userLoginDocenteCaminoCieloApp", Context.MODE_PRIVATE);
         String nombres = preferences.getString("nombres","");
         String apellidos = preferences.getString("apellidos","");
 
