@@ -16,27 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ivAtras"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_atras"
-            android:layout_margin="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1">
-
-
-            <ImageView
-                android:id="@+id/ivLogo"
-                android:layout_width="100dp"
-                android:layout_height="95dp"
-                android:layout_gravity="center"
-                app:tint="@color/principal"
-                android:src="@drawable/logo" />
 
 
         </LinearLayout>
@@ -49,6 +34,25 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/ivAtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_atras"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"/>
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="100dp"
+        android:layout_height="95dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cvLogin"
+        app:tint="@color/principal"
+        android:src="@drawable/logo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvLogin"
@@ -60,41 +64,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9">
+        app:layout_constraintVertical_bias="0.7">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginHorizontal="30dp"
+            android:gravity="center"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/txtCreateAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CreateAccount"
                 android:layout_gravity="center"
-                android:textSize="20sp"
                 android:layout_marginTop="40dp"
-                android:fontFamily="@font/poppins_semibold"/>
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/CreateAccount"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvMensaje"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="error"
-                android:visibility="gone"
                 android:layout_gravity="center"
-                android:textSize="12sp"
+                android:fontFamily="@font/poppins_light"
+                android:text="error"
                 android:textColor="@color/error"
-                android:fontFamily="@font/poppins_light"/>
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilNombres"
-                android:layout_width="match_parent"
-                android:layout_marginTop="24dp"
                 style="@style/Widget.Design.TextInputLayout"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtNombres"
@@ -102,17 +107,17 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:hint="@string/edtNombres"
-                    android:textSize="12sp"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilApellidos"
-                android:layout_width="match_parent"
-                android:layout_marginTop="24dp"
                 style="@style/Widget.Design.TextInputLayout"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtApellidos"
@@ -120,18 +125,18 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:hint="@string/edtApellidos"
-                    android:textSize="12sp"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilDni"
-                android:layout_width="match_parent"
-                android:layout_marginTop="24dp"
                 style="@style/Widget.Design.TextInputLayout"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtDni"
@@ -139,29 +144,29 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:hint="@string/etUser"
-                    android:textSize="12sp"
+                    android:inputType="number"
                     android:maxLength="8"
-                    android:inputType="number" />
+                    android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilPassword"
-                android:layout_width="match_parent"
-                android:layout_marginTop="24dp"
                 style="@style/Widget.Design.TextInputLayout"
-                app:endIconMode="password_toggle"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
-                    android:fontFamily="@font/poppins_light"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_light"
+                    android:hint="@string/etPassword"
                     android:inputType="textPassword"
-                    android:textSize="12sp"
-                    android:hint="@string/etPassword"/>
+                    android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,12 +175,12 @@
                 android:id="@+id/btnCrearCuenta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:textColor="@color/white"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/btnCreateAccount"
                 android:textAllCaps="false"
-                android:text="@string/btnCreateAccount" />
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

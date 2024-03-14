@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.lottie)
     implementation (libs.swiperefreshlayout)
     implementation (libs.shimmer)
+    implementation (libs.glide)
 
     implementation(libs.activity.ktx)
     implementation(libs.fragment.ktx)

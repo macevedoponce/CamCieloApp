@@ -34,4 +34,5 @@
     <string name="Total">Total</string>
     <string name="sinRegistros">Actualmente no cuentas con ningun registro</string>
     <string name="topAlumnos">Alumnos con mayor puntaje</string>
+    <string name="cerrarSesion">Cerrar Sesión</string>
 </resources>
