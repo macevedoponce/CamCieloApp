@@ -43,4 +43,5 @@
     <string name="misDatos">Mis datos</string>
     <string name="ActualizarDatos">Actualiza tus datos personales</string>
     <string name="actualizar">Actualizar Datos</string>
+    <string name="editarAlumno">Editar Alumno</string>
 </resources>

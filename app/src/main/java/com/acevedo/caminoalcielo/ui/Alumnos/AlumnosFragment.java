@@ -173,6 +173,7 @@ public class AlumnosFragment extends Fragment {
 
         CardView cvRegistrarPuntos = dialog.findViewById(R.id.cvRegistrarPuntos);
         CardView cvExportarPDF = dialog.findViewById(R.id.cvExportarPDF);
+        CardView cvEditarAlumno = dialog.findViewById(R.id.cvEditarAlumno);
 
         cvRegistrarPuntos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,7 +207,19 @@ public class AlumnosFragment extends Fragment {
             }
         });
 
-
+        cvEditarAlumno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent i = new Intent(getContext(), AgregarAlumnoActivity.class);
+                i.putExtra("id_alumno",id);
+                i.putExtra("nombres",nombres);
+                i.putExtra("apellidos",apellidos);
+                i.putExtra("dni",dni);
+                i.putExtra("foto",foto);
+                startActivity(i);
+            }
+        });
 
 
         dialog.show();

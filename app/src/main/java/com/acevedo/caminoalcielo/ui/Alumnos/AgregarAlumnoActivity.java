@@ -42,7 +42,7 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
     TextInputEditText edtNombres, edtApellidos, edtDni;
     Button btnAgregarAlumno;
     RecyclerView rvAvatars;
-    TextView tvMensaje;
+    TextView tvMensaje,tvCrearAlumno;
     RequestQueue requestQueue;
     ImageView ivAtras, ivLogo;
 
@@ -58,6 +58,7 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
         Util.obtenerListaAvatars();
         progressDialogHelper = new ProgressDialogHelper(this);
         setContentView(R.layout.activity_agregar_alumno);
+        tvCrearAlumno = findViewById(R.id.tvCrearAlumno);
         ivAtras = findViewById(R.id.ivAtrasCrearAlumno);
         ivLogo = findViewById(R.id.ivLogoCrearAlumno);
         llRegresar = findViewById(R.id.llRegresar);
@@ -73,7 +74,7 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         rvAvatars.setHasFixedSize(true);
         rvAvatars.setLayoutManager(new GridLayoutManager(this, 3));
-
+        obtenerDatosIntent();
         AvatarAdapter avatarAdapter = new AvatarAdapter(Util.listAvatars);
         rvAvatars.setAdapter(avatarAdapter);
         ThemeActive();
@@ -96,6 +97,21 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+    }
+
+    private void obtenerDatosIntent() {
+        if (getIntent().hasExtra("nombres") && getIntent().hasExtra("apellidos") && getIntent().hasExtra("dni")) {
+            tvCrearAlumno.setText(R.string.editarAlumno);
+            btnAgregarAlumno.setText(R.string.editarAlumno);
+            String nombres = getIntent().getStringExtra("nombres");
+            String apellidos = getIntent().getStringExtra("apellidos");
+            String dni = getIntent().getStringExtra("dni");
+            String foto = getIntent().getStringExtra("foto");
+            edtNombres.setText(nombres);
+            edtApellidos.setText(apellidos);
+            edtDni.setText(dni);
+            Util.nombreAvatar = foto;
+        }
     }
 
     private void ValidarDatos() {
@@ -123,6 +139,9 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
         progressDialogHelper.showProgressDialog();
         String nombreAvatar = Util.nombreAvatar;
         String url = Util.RUTA_CREAR_ALUMNOS;
+        if(getIntent().hasExtra("id_alumno")){
+            url = Util.RUTA_ACTUALIZAR_USUARIO;
+        }
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -161,11 +180,18 @@ public class AgregarAlumnoActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                if(getIntent().hasExtra("id_alumno")){
+                    int id_alumno = getIntent().getIntExtra("id_alumno",0);
+                    params.put("id_user", String.valueOf(id_alumno));
+
+                }else{
+                    params.put("id_rol", "2");
+                }
                 params.put("nombres", nombres);
                 params.put("apellidos", apellidos);
                 params.put("dni", dni);
                 params.put("foto", nombreAvatar);
-                params.put("id_rol", "2");
+
                 return params;
             }
         };

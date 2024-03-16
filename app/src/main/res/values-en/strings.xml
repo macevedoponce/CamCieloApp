@@ -40,4 +40,8 @@
     <string name="tamFuente">Font size</string>
     <string name="Lenguajes">Select language</string>
     <string name="ajutes">Settings and support</string>
+    <string name="misDatos">My data</string>
+    <string name="ActualizarDatos">Update your personal Data</string>
+    <string name="actualizar">Updated Info</string>
+    <string name="editarAlumno">Edit Student</string>
 </resources>
