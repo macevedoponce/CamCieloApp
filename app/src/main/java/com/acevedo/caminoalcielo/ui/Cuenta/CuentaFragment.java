@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.acevedo.caminoalcielo.MainActivity;
 import com.acevedo.caminoalcielo.R;
@@ -26,7 +27,7 @@ import com.google.android.material.card.MaterialCardView;
 
 public class CuentaFragment extends Fragment {
 
-    MaterialCardView cvCerrarSesion;
+    MaterialCardView cvCerrarSesion, cvEditProfile;
     ImageView ivFoto, ivCerrarSesion;
     TextView tvNombres, tvApellidos, tvDni;
 
@@ -42,6 +43,7 @@ public class CuentaFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cuenta, container, false);
         cvCerrarSesion = view.findViewById(R.id.cvCerrarSesion);
+        cvEditProfile = view.findViewById(R.id.cvEditProfile);
         ivFoto = view.findViewById(R.id.ivFotoUsuario);
         tvNombres = view.findViewById(R.id.tvNombresUsuario);
         tvApellidos = view.findViewById(R.id.tvApellidosUsuario);
@@ -62,6 +64,13 @@ public class CuentaFragment extends Fragment {
             }
         });
 
+        cvEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Proximamente...", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return view;
     }
@@ -78,12 +87,14 @@ public class CuentaFragment extends Fragment {
         tvNombres.setText(nombres);
         tvApellidos.setText(apellidos);
         tvDni.setText(dni);
-        Glide
-                .with(CuentaFragment.this)
+        if(foto.isEmpty() || foto.equals("null")){
+            ivFoto.setImageResource(R.drawable.bg_bottom_create_user);
+        }else{
+            Glide.with(CuentaFragment.this)
                 .load(foto)
                 .centerCrop()
                 .into(ivFoto);
-
+        }
     }
 
     private void ThemeActive() {

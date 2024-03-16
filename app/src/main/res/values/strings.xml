@@ -35,4 +35,5 @@
     <string name="sinRegistros">Actualmente no cuentas con ningun registro</string>
     <string name="topAlumnos">Alumnos con mayor puntaje</string>
     <string name="cerrarSesion">Cerrar Sesión</string>
+    <string name="editarPerfil">Actualizar Datos</string>
 </resources>
