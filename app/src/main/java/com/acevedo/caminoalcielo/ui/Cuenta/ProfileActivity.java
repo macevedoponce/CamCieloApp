@@ -83,6 +83,13 @@ public class ProfileActivity extends AppCompatActivity {
                 ValidarCampos();
             }
         });
+
+        lyRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -92,7 +99,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void obtenerDatosIntent() {
         id = getIntent().getStringExtra("id_usuario");
-        Toast.makeText(this, "ID: " + id + "", Toast.LENGTH_SHORT).show();
         nombres = getIntent().getStringExtra("nombres");
         apellidos = getIntent().getStringExtra("apellidos");
         dni = getIntent().getStringExtra("dni");
