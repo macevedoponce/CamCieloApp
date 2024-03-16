@@ -27,8 +27,8 @@ public class Util {
         avatarSeleccion = listAvatars.get(0);
     }
 
-    public static final String RUTA="http://193.70.38.164/ccieloAPI/";
-    // public static final String RUTA="http://192.168.18.53/ccieloAPI/";
+    //public static final String RUTA="http://193.70.38.164/ccieloAPI/";
+     public static final String RUTA="http://192.168.18.53/ccieloAPI/";
     public static final String RUTA_CREAR_USUARIO = RUTA + "crear_usuario.php";
     public static final String RUTA_VALIDAR_USUARIO = RUTA + "validar_usuario.php";
     public static final String RUTA_LIST_ALUMNOS = RUTA + "list_alumnos.php";
@@ -36,5 +36,6 @@ public class Util {
     public static final String RUTA_REGISTRAR_PUNTOS = RUTA + "registrar_puntos.php";
     public static final String RUTA_REPORTE_PUNTOS = RUTA + "list_reporte_puntos.php";
     public static final String RUTA_LIST_TOP_PUNTOS = RUTA + "list_top_alumnos.php";
+    public static final String RUTA_ACTUALIZAR_USUARIO = RUTA + "actualizar_usuario.php";
 
 }

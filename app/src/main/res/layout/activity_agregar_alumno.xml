@@ -93,7 +93,7 @@
             android:textSize="20sp"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:text="Comunicación"/>
+            android:text="@string/AgregarAlumno"/>
 
 
         <!--        <TextView-->

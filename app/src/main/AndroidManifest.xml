@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +16,9 @@
         android:theme="@style/Theme.CaminoAlCielo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.Cuenta.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.Alumnos.ExportarDatosPDFActivity"
             android:exported="false" />

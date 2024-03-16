@@ -36,9 +36,11 @@ import java.util.Locale;
 
 public class CuentaFragment extends Fragment {
 
-    MaterialCardView cvCerrarSesion, cvEditProfile, cvIdioma, cvTamFuente;
-    ImageView ivFoto, ivCerrarSesion, ivProfile, ivIdioma, ivTamFuente, ivNextProfile, ivNextIdioma, ivNextTamFuente;
+    MaterialCardView cvCerrarSesion, cvEditProfile, cvIdioma;
+    ImageView ivFoto, ivCerrarSesion, ivProfile, ivIdioma, ivTamFuente, ivNextProfile, ivNextIdioma;
     TextView tvNombres, tvApellidos, tvDni;
+
+    String id, dni, nombres, apellidos;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,6 @@ public class CuentaFragment extends Fragment {
         cvCerrarSesion = view.findViewById(R.id.cvCerrarSesion);
         cvIdioma = view.findViewById(R.id.cvIdioma);
         cvEditProfile = view.findViewById(R.id.cvEditProfile);
-        cvTamFuente = view.findViewById(R.id.cvTamFuente);
         ivFoto = view.findViewById(R.id.ivFotoUsuario);
         tvNombres = view.findViewById(R.id.tvNombresUsuario);
         tvApellidos = view.findViewById(R.id.tvApellidosUsuario);
@@ -62,10 +63,8 @@ public class CuentaFragment extends Fragment {
         ivCerrarSesion = view.findViewById(R.id.ivCerrarSesion);
         ivProfile = view.findViewById(R.id.ivProfile);
         ivIdioma = view.findViewById(R.id.ivIdioma);
-        ivTamFuente = view.findViewById(R.id.ivTamFuente);
         ivNextProfile = view.findViewById(R.id.ivNextProfile);
         ivNextIdioma = view.findViewById(R.id.ivNextIdioma);
-        ivNextTamFuente = view.findViewById(R.id.ivNextTamFuente);
         recuperarPreferencias();
         ThemeActive();
         cvCerrarSesion.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +83,12 @@ public class CuentaFragment extends Fragment {
         cvEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Proximamente...", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("id_usuario", id);
+                i.putExtra("nombres", nombres);
+                i.putExtra("apellidos", apellidos);
+                i.putExtra("dni", dni);
+                startActivity(i);
             }
         });
 
@@ -94,7 +98,6 @@ public class CuentaFragment extends Fragment {
                 showCambiarLenguaje();
             }
         });
-
         return view;
     }
 
@@ -163,10 +166,10 @@ public class CuentaFragment extends Fragment {
     private void recuperarPreferencias() {
         SharedPreferences preferences = getContext().getSharedPreferences("userLoginDocenteCaminoCieloApp", Context.MODE_PRIVATE);
 
-        String id = preferences.getString("id","");
-        String dni = preferences.getString("dni","");
-        String nombres = preferences.getString("nombres","");
-        String apellidos = preferences.getString("apellidos","");
+        id = preferences.getString("id","");
+        dni = preferences.getString("dni","");
+        nombres = preferences.getString("nombres","");
+        apellidos = preferences.getString("apellidos","");
         String foto = preferences.getString("foto","");
 
         tvNombres.setText(nombres);
@@ -198,7 +201,6 @@ public class CuentaFragment extends Fragment {
                 ivTamFuente.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 ivNextProfile.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 ivNextIdioma.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-                ivNextTamFuente.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 break;
         }
     }
