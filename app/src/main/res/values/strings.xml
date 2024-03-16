@@ -36,4 +36,8 @@
     <string name="topAlumnos">Alumnos con mayor puntaje</string>
     <string name="cerrarSesion">Cerrar Sesión</string>
     <string name="editarPerfil">Actualizar Datos</string>
+    <string name="cambiarIdioma">Cambiar idioma</string>
+    <string name="tamFuente">Tamaño de fuente</string>
+    <string name="Lenguajes">Seleccione idioma</string>
+    <string name="ajutes">Ajustes y Soporte</string>
 </resources>

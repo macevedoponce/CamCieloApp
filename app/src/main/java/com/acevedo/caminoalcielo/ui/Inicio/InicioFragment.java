@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class InicioFragment extends Fragment {
@@ -108,11 +109,10 @@ public class InicioFragment extends Fragment {
                                 }
                                 alumnoAdapter.notifyDataSetChanged();
                             }else{
-                                String message = response.getString("message");
+
                                 sfl.setVisibility(View.GONE);
                                 rvTopAlumnos.setVisibility(View.GONE);
                                 tvSinAlumnos.setVisibility(View.VISIBLE);
-                                tvSinAlumnos.setText(message);
 
                             }
                         } catch (JSONException e) {
@@ -154,9 +154,22 @@ public class InicioFragment extends Fragment {
         SharedPreferences preferences = requireContext().getSharedPreferences("userLoginDocenteCaminoCieloApp", Context.MODE_PRIVATE);
         String nombres = preferences.getString("nombres","");
         String apellidos = preferences.getString("apellidos","");
+        String lenguaje = preferences.getString("lenguaje","");
+        if(lenguaje.isEmpty()){
+            lenguaje = "es";
+        }
+        setLocale(lenguaje);
 
         tvNombres.setText(nombres);
         tvApellidos.setText(apellidos);
 
+    }
+
+    private void setLocale(String lenguaje) {
+        Locale locale = new Locale(lenguaje);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getContext().getResources().updateConfiguration(configuration,this.getResources().getDisplayMetrics());
     }
 }
