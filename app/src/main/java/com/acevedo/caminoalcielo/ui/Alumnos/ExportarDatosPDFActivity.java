@@ -32,6 +32,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -52,13 +53,18 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExportarDatosPDFActivity extends AppCompatActivity {
 
-    private static final int STORAGE_PERMISSION_CODE = 23;
+
+    private static final int CREATE_FILE_REQUEST_CODE = 1;
+
+    private PdfDocument document;
+
     int id_alumno, id_foto;
     String nombres, apellidos, dni, foto;
     RequestQueue requestQueue;
@@ -82,107 +88,9 @@ public class ExportarDatosPDFActivity extends AppCompatActivity {
         ThemeActive();
         obtenerDatosIntent();
         obtenerDatosAPI();
-        binding.llDownload.setOnClickListener(v -> validarPermisos());
+        binding.llDownload.setOnClickListener(v -> generarPDFXml(this, binding.getRoot()));
 
     }
-
-    private void validarPermisos(){
-        // Verificar si los permisos ya están concedidos
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (Environment.isExternalStorageManager()) {
-                // Los permisos ya están concedidos, puedes realizar la otra función
-                //generarPDF();
-                generarPDFXml(this, binding.getRoot());
-            } else {
-                // Los permisos no están concedidos, solicitarlos nuevamente
-                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivityForResult(intent, STORAGE_PERMISSION_CODE);
-            }
-        }else{
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_GRANTED) {
-                // Los permisos están concedidos, puedes realizar la otra función
-                //generarPDF();
-                generarPDFXml(this, binding.getRoot());
-
-            } else {
-                // Los permisos no están concedidos, solicítalos nuevamente
-                requestForStoragePermissions();
-            }
-        }
-    }
-
-    private void requestForStoragePermissions() {
-        //Android is 11 (R) or above
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-            try {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", this.getPackageName(), null);
-                intent.setData(uri);
-                storageActivityResultLauncher.launch(intent);
-            }catch (Exception e){
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                storageActivityResultLauncher.launch(intent);
-            }
-        }else{
-            //Below android 11
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    },
-                    STORAGE_PERMISSION_CODE
-            );
-        }
-
-    }
-
-    private ActivityResultLauncher<Intent> storageActivityResultLauncher =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                    new ActivityResultCallback<ActivityResult>(){
-
-                        @Override
-                        public void onActivityResult(ActivityResult o) {
-                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-                                //Android is 11 (R) or above
-                                if(Environment.isExternalStorageManager()){
-                                    //Manage External Storage Permissions Granted
-                                    Log.d(TAG, "onActivityResult: Manage External Storage Permissions Granted");
-                                }else{
-                                    Toast.makeText(ExportarDatosPDFActivity.this, "Storage Permissions Denied", Toast.LENGTH_SHORT).show();
-                                }
-                            }else{
-                                //Below android 11
-
-                            }
-                        }
-                    });
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == STORAGE_PERMISSION_CODE){
-            if(grantResults.length > 0){
-                boolean write = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                boolean read = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-
-                if(read && write){
-                    Toast.makeText(ExportarDatosPDFActivity.this, "Storage Permissions Granted", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(ExportarDatosPDFActivity.this, "Storage Permissions Denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
-
     private void generarPDFXml(Context context, View view){
         binding.llDownload.setVisibility(View.INVISIBLE);
         binding.ivAtras.setVisibility(View.INVISIBLE);
@@ -190,7 +98,7 @@ public class ExportarDatosPDFActivity extends AppCompatActivity {
         String nombre_documento = binding.tvDni.getText().toString() + "_" + binding.tvNombres.getText().toString() + ".pdf";
 
         // Crear un nuevo documento PDF
-        PdfDocument document = new PdfDocument();
+        document = new PdfDocument();
 
         // Obtener el tamaño de la vista
         int width = view.getWidth();
@@ -203,7 +111,7 @@ public class ExportarDatosPDFActivity extends AppCompatActivity {
 
         // Configurar el color del texto dependiendo del modo de tema del dispositivo
         int colorTexto = Color.BLACK; // Color negro para modo oscuro
-        
+
         // Configurar el color del texto para todos los TextView en la vista
         ArrayList<TextView> textViews = getAllTextViews(view);
         for (TextView textView : textViews) {
@@ -216,14 +124,40 @@ public class ExportarDatosPDFActivity extends AppCompatActivity {
         // Terminar la página y agregar al documento
         document.finishPage(page);
 
-        // Guardar el documento PDF
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),  nombre_documento);
-        try {
-            document.writeTo(new FileOutputStream(file));
-            Toast.makeText(context, "Pdf: "+ nombre_documento + " descargado", Toast.LENGTH_SHORT).show();
-            finish();
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Crear una intención para que el usuario seleccione dónde guardar el archivo
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/pdf"); // Define el tipo de archivo que deseas crear (en este caso, PDF)
+        // Puedes agregar un nombre predeterminado para el archivo
+        intent.putExtra(Intent.EXTRA_TITLE, nombre_documento);
+        startActivityForResult(intent, CREATE_FILE_REQUEST_CODE);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CREATE_FILE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            try {
+                // Abre un flujo de salida para escribir en el archivo seleccionado por el usuario
+                OutputStream outputStream = getContentResolver().openOutputStream(uri);
+                if (outputStream != null) {
+                    // Escribe el contenido del documento PDF en el flujo de salida
+                    document.writeTo(outputStream);
+                    // Cierra el flujo de salida
+                    outputStream.close();
+                    // Notifica al usuario que el PDF se ha guardado correctamente
+                    Toast.makeText(ExportarDatosPDFActivity.this, "Pdf guardado", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Si el usuario cancela la acción, puedes manejarlo aquí
         }
 
         // Cerrar el documento
