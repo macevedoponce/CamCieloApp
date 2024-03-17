@@ -22,7 +22,10 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextPaint;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -198,6 +201,15 @@ public class ExportarDatosPDFActivity extends AppCompatActivity {
         PdfDocument.Page page = document.startPage(pageInfo);
         Canvas canvas = page.getCanvas();
 
+        // Configurar el color del texto dependiendo del modo de tema del dispositivo
+        int colorTexto = Color.BLACK; // Color negro para modo oscuro
+        
+        // Configurar el color del texto para todos los TextView en la vista
+        ArrayList<TextView> textViews = getAllTextViews(view);
+        for (TextView textView : textViews) {
+            textView.setTextColor(colorTexto);
+        }
+
         // Dibujar la vista en el lienzo
         view.draw(canvas);
 
@@ -216,6 +228,24 @@ public class ExportarDatosPDFActivity extends AppCompatActivity {
 
         // Cerrar el documento
         document.close();
+    }
+
+
+    // Método para obtener todos los TextView dentro de una vista
+    private ArrayList<TextView> getAllTextViews(View view) {
+        ArrayList<TextView> textViews = new ArrayList<>();
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View childView = viewGroup.getChildAt(i);
+                if (childView instanceof TextView) {
+                    textViews.add((TextView) childView);
+                } else if (childView instanceof ViewGroup) {
+                    textViews.addAll(getAllTextViews(childView));
+                }
+            }
+        }
+        return textViews;
     }
 
     private void obtenerDatosAPI() {

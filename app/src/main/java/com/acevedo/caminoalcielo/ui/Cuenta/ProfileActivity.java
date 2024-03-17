@@ -3,6 +3,8 @@ package com.acevedo.caminoalcielo.ui.Cuenta;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -62,8 +64,8 @@ public class ProfileActivity extends AppCompatActivity {
         //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile);
         info = findViewById(R.id.info);
-        ivLogo = findViewById(R.id.ivLogo);
-        ivAtras = findViewById(R.id.ivAtras);
+        ivLogo = findViewById(R.id.ivLogoProfile);
+        ivAtras = findViewById(R.id.ivAtrasProfile);
         lyRegresar = findViewById(R.id.lyRegresar);
         tilNombres = findViewById(R.id.tilNombres);
         tilApellidos = findViewById(R.id.tilApellidos);
@@ -75,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-
+        ThemeActive();
         obtenerDatosIntent();
         btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,5 +192,21 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Agregar la solicitud a la cola de Volley para su ejecución
         requestQueue.add(request);
+    }
+
+    private void ThemeActive() {
+        // Verificar el modo actual del tema
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // Modo claro
+
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                // Modo oscuro
+                ivLogo.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                ivAtras.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                break;
+        }
     }
 }

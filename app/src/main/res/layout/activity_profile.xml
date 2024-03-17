@@ -26,7 +26,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/ivAtras"
+                android:id="@+id/ivAtrasProfile"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_atras"/>
@@ -46,9 +46,10 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <ImageView
-                android:id="@+id/ivLogo"
+                android:id="@+id/ivLogoProfile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                app:tint="@color/principal"
                 android:src="@drawable/logo"/>
         </LinearLayout>
 

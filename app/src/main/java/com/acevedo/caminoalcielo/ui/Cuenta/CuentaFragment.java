@@ -198,7 +198,6 @@ public class CuentaFragment extends Fragment {
                 ivCerrarSesion.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 ivProfile.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 ivIdioma.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-                ivTamFuente.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 ivNextProfile.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 ivNextIdioma.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                 break;
